@@ -5,14 +5,21 @@ export class CollisionManager {
         this.enemyManager = enemyManager;
     }
 
+    isCollsion(item, target) {
+        const xDistance = (item.x + item.width) - target.x;
+        const yDistance = item.y - target.y;
+        if (
+            xDistance > 0 && xDistance <= (target.width + item.width) &&
+            (yDistance > 0 && yDistance <= target.height || yDistance < 0 && yDistance >= -item.height)
+        ) {
+            return true;
+        }
+        return false;
+    }
+
     checkCollision() {
         for (let x = this.enemyManager.enemies.length - 1; x >= 0; x--) {
-            const xDistance = (this.player.x + this.player.width) - this.enemyManager.enemies[x].x;
-            const yDistance = this.player.y - this.enemyManager.enemies[x].y;
-            if (
-                xDistance > 0 && xDistance <= (this.enemyManager.enemies[x].width + this.player.width) &&
-                (yDistance > 0 && yDistance <= this.enemyManager.enemies[x].height || yDistance < 0 && yDistance >= -this.player.height)
-            ) {
+            if (this.isCollsion(this.player, this.enemyManager.enemies[x])) {
                 this.player.die();
             }
             if (this.enemyManager.enemies[x].y > this.enemyManager.bottomBound) {
@@ -22,10 +29,7 @@ export class CollisionManager {
             }
             for (let y = this.player.weapon.bullets.length - 1; y >= 0; y--) {
                 if (!this.enemyManager.enemies[x]) return;
-                if (
-                    Math.abs(this.enemyManager.enemies[x].x - this.player.weapon.bullets[y].x) < this.enemyManager.enemies[x].width &&
-                    Math.abs(this.enemyManager.enemies[x].y - this.player.weapon.bullets[y].y) < this.enemyManager.enemies[x].height
-                ) {
+                if (this.isCollsion(this.player.weapon.bullets[y], this.enemyManager.enemies[x])) {
                     this.enemyManager.enemies[x].kill();
                     this.enemyManager.enemies.splice(x, 1);
                     this.player.weapon.bullets[y].delete();
