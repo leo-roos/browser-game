@@ -15,6 +15,8 @@ export class Weapon{
         this.shootTimer = 0;
         this.topBound = 0;
 
+        this.recoil = 100;
+
         this.el = this.#init();
     }
 

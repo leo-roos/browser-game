@@ -56,6 +56,7 @@ export class Player {
         }
         if (this.input.keys[" "]) {
             this.weapon.shoot();
+            this.y += deltaTime * this.weapon.recoil;
         }
 
         if (this.x >= this.rightBound) {
