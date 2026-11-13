@@ -10,6 +10,7 @@ export class Player {
         this.height = 25;
         this.leftBound = 0;
         this.rightBound = window.innerWidth - this.width;
+        this.topBound = 0;
         this.bottomBound = 0;
 
         this.speed = 500;
@@ -63,6 +64,11 @@ export class Player {
             this.x = this.rightBound;
         } else if (this.x <= this.leftBound) {
             this.x = this.leftBound;
+        }
+        if (this.y >= this.bottomBound) {
+            this.y = this.bottomBound;
+        } else if (this.y <= this.topBound) {
+            this.y = this.topBound;
         }
         this.weapon.update(deltaTime);
     }
