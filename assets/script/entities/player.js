@@ -10,10 +10,18 @@ export class Player {
         this.height = 25;
         this.leftBound = 0;
         this.rightBound = window.innerWidth - this.width;
+        this.bottomBound = 0;
+
         this.speed = 500;
+        this.verticalSpeed = 0.75;
         this.el = this.#init();
         this.alive = true;
         this.weapon = new Weapon(targetEl, this);
+    }
+
+    updateBound(bottomBound, rightBound) {
+        this.bottomBound = bottomBound - this.height;
+        this.rightBound = rightBound - this.width;
     }
 
     #init() {
@@ -40,6 +48,12 @@ export class Player {
         if (this.input.keys.ArrowRight || this.input.keys.d) {
             this.x += deltaTime * this.speed;
         }
+        if (this.input.keys.ArrowUp || this.input.keys.w) {
+            this.y -= deltaTime * this.speed * this.verticalSpeed;
+        }
+        if (this.input.keys.ArrowDown || this.input.keys.s) {
+            this.y += deltaTime * this.speed * this.verticalSpeed;
+        }
         if (this.input.keys[" "]) {
             this.weapon.shoot();
         }
@@ -53,6 +67,7 @@ export class Player {
     }
 
     draw() {
+        this.el.style.top = this.y + "px";
         this.el.style.left = this.x + "px";
         this.weapon.draw();
     }

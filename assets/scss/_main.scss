@@ -10,6 +10,8 @@ html, body, #game {
     width: 100vw;
     position: relative;
 
+    overflow-y: hidden;
+
     #player {
         position: absolute;
         display: block;

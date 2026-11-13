@@ -10,12 +10,16 @@ export class GameManager {
         this.lastTime = 0;
         this.isRunning = true;
         this.frameRequest = null;
-        this.#init();
+        
+        this.bottomBound = window.innerHeight;
+        this.rightBound = window.innerWidth;
+
 
         this.player = new Player(targetEl, this.input);
         this.enemyManager = new EnemyManager(targetEl, this.player);
         this.collisionManager = new CollisionManager(targetEl, this.player, this.enemyManager)
-        this.loop;
+        this.updateBound(this.bottomBound, this.rightBound);
+        this.#init();
     }
 
     #init() {
@@ -36,6 +40,13 @@ export class GameManager {
         this.loop = requestAnimationFrame((t) => this.#gameLoop(t));
     }
 
+    updateBound(bottomBound, rightBound) {
+        this.bottomBound = bottomBound;
+        this.rightBound = rightBound;
+
+        this.collisionManager.updateBound(this.bottomBound, this.rightBound)
+        this.player.updateBound(this.bottomBound, this.rightBound)
+    }
 
     update(deltaTime) {
         this.player.update(deltaTime);

@@ -7,7 +7,6 @@ export class EnemyManager {
         this.enemies = [];
         this.spawnTimer = 0.40;
         this.spawnCounter = 0;
-        this.bottomBound = window.innerHeight - 50;
     }
 
     spawnEnemy() {
