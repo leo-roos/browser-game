@@ -5,7 +5,7 @@ export class Enemy {
         this.y = 0;
         this.width = 50;
         this.height = 50;
-        this.speed = 500;
+        this.speed = 500; 
         this.el = this.#init();
     }
 
@@ -28,7 +28,7 @@ export class Enemy {
     update(deltaTime) {
         this.y += this.speed * deltaTime;
 
-        if(Math.floor(Math.random() * 5) == 1) {
+        if(Math.floor(Math.random() * 10) == 1) {
             if(Math.floor(Math.random() * 2) == 1) {
                 this.x += this.speed * deltaTime;
             } else {
