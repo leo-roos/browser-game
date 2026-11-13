@@ -10,3 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
 window.addEventListener("resize", function() {
     game.updateBound(window.innerHeight, window.innerWidth)
 })
+
+document.addEventListener("mousemove", function(event) {
+    game.updateMouse(event.clientX, event.clientY);
+})

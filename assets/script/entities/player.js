@@ -13,6 +13,9 @@ export class Player {
         this.topBound = 0;
         this.bottomBound = 0;
 
+        this.mouseX = 0;
+        this.mouseY = 0;
+
         this.speed = 500;
         this.verticalSpeed = 0.75;
         this.el = this.#init();
@@ -23,6 +26,12 @@ export class Player {
     updateBound(bottomBound, rightBound) {
         this.bottomBound = bottomBound - this.height;
         this.rightBound = rightBound - this.width;
+    }
+
+    updateMouse(x, y) {
+        this.mouseX = x;
+        this.mouseY = y;
+        this.weapon.updateMouse(this.mouseX, this.mouseY);
     }
 
     #init() {

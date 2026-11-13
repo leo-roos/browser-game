@@ -15,9 +15,17 @@ export class Weapon{
         this.shootTimer = 0;
         this.topBound = 0;
 
+        this.mouseX = 0;
+        this.mouseY = 0;
+
         this.recoil = 100;
 
         this.el = this.#init();
+    }
+
+    updateMouse(x, y) {
+        this.mouseX = x;
+        this.mouseY = y;
     }
 
     #init() {
@@ -31,9 +39,20 @@ export class Weapon{
         return el;
     }
 
+    #getAngleDegrees(x1, y1, x2, y2) {
+        const radians = Math.atan2(y2 - y1, x2 - x1);
+        let degrees = radians * (180 / Math.PI);
+        
+        return degrees;
+    }
+
     shoot() {
         if (this.shootTimer > this.shootCooldown) {
-            let b = new Bullet(this.targetEl, this.player, this);
+            let angle = this.#getAngleDegrees(this.mouseX, this.mouseY, this.x, this.y) - 90;
+            if (angle < -60 || angle > 60) {
+                angle = 0;
+            }
+            let b = new Bullet(this.targetEl, this.player, this, angle);
             this.bullets.push(b);
             this.shootTimer = 0;
         }

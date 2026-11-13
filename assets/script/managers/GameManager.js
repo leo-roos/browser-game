@@ -14,6 +14,8 @@ export class GameManager {
         this.bottomBound = window.innerHeight;
         this.rightBound = window.innerWidth;
 
+        this.mouseX = 0;
+        this.mouseY = 0;
 
         this.player = new Player(targetEl, this.input);
         this.enemyManager = new EnemyManager(targetEl, this.player);
@@ -46,6 +48,12 @@ export class GameManager {
 
         this.collisionManager.updateBound(this.bottomBound, this.rightBound)
         this.player.updateBound(this.bottomBound, this.rightBound)
+    }
+
+    updateMouse(x, y) {
+        this.mouseX = x;
+        this.mouseY = y;
+        this.player.updateMouse(this.mouseX, this.mouseY)
     }
 
     update(deltaTime) {
