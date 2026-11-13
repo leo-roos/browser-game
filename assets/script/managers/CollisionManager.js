@@ -36,12 +36,12 @@ export class CollisionManager {
                 this.enemyManager.enemies.splice(x, 1);
                 continue;
             }
-            if (this.enemyManager.enemies[x].x > this.rightBound) {
-                this.enemyManager.enemies[x].x = this.rightBound;
+            if ((this.enemyManager.enemies[x].x + this.enemyManager.enemies[x].width) > this.rightBound) {
+                this.enemyManager.enemies[x].x = this.rightBound - this.enemyManager.enemies[x].width;
             } else if (this.enemyManager.enemies[x].x < this.leftBound) {
                 this.enemyManager.enemies[x].x = this.leftBound;
             }
-            
+
             for (let y = this.player.weapon.bullets.length - 1; y >= 0; y--) {
                 if (!this.enemyManager.enemies[x]) return;
                 if (this.isCollsion(this.player.weapon.bullets[y], this.enemyManager.enemies[x])) {
