@@ -31,7 +31,6 @@ export class Player {
     updateMouse(x, y) {
         this.mouseX = x;
         this.mouseY = y;
-        this.weapon.updateMouse(this.mouseX, this.mouseY);
     }
 
     #init() {
@@ -43,6 +42,13 @@ export class Player {
         el.style.height = this.height + "px";
         this.targetEl.append(el);
         return el;
+    }
+    
+    #getAngleDegrees(x1, y1, x2, y2) {
+        const radians = Math.atan2(y2 - y1, x2 - x1);
+        let degrees = radians * (180 / Math.PI);
+        
+        return degrees;
     }
 
     die() {
@@ -65,7 +71,11 @@ export class Player {
             this.y += deltaTime * this.speed * this.verticalSpeed;
         }
         if (this.input.keys[" "]) {
-            this.weapon.shoot();
+            let angle = this.#getAngleDegrees(this.mouseX, this.mouseY, this.weapon.x, this.weapon.y) - 90;
+            if (angle < -60 || angle > 60) {
+                angle = 0;
+            }
+            this.weapon.shoot(angle);
             this.y += deltaTime * this.weapon.recoil;
         }
 
