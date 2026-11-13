@@ -77,6 +77,7 @@ export class Player {
             }
             this.weapon.shoot(angle);
             this.y += deltaTime * this.weapon.recoil;
+            this.x -= deltaTime * this.weapon.recoil * (angle / 57.6);
         }
 
         if (this.x >= this.rightBound) {
