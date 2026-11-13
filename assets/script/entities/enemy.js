@@ -27,9 +27,18 @@ export class Enemy {
 
     update(deltaTime) {
         this.y += this.speed * deltaTime;
+
+        if(Math.floor(Math.random() * 5) == 1) {
+            if(Math.floor(Math.random() * 2) == 1) {
+                this.x += this.speed * deltaTime;
+            } else {
+                this.x -= this.speed * deltaTime;
+            }
+        }
     }
 
     draw() {
         this.el.style.top = this.y + "px";
+        this.el.style.left = this.x + "px";
     }
 }
