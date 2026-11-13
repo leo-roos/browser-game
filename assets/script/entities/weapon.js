@@ -6,8 +6,8 @@ export class Weapon{
         this.player = player;
         this.bullets = [];
 
-        this.width = 50;
-        this.height = 50;
+        this.width = 25;
+        this.height = 25;
         this.x = this.player.x;
         this.y = this.player.y;
 
