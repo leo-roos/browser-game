@@ -13,14 +13,19 @@ html, body, #game {
   display: block;
   height: 50px;
   width: 50px;
-  background-color: red;
+  background-image: url(./images/icon_bucket.png);
 }
 #game #dead {
   position: absolute;
   display: block;
   height: 50px;
   width: 50px;
-  background-color: rgb(221, 193, 193);
+  background-image: url(./images/icon_bucket_red.png);
+}
+#game #player, #game #dead {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 #game .enemy {
   position: absolute;

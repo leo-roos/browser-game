@@ -6,8 +6,8 @@ export class Player {
         this.input = input;
         this.x = window.innerWidth / 2;
         this.y = window.innerHeight - 200;
-        this.width = 50;
-        this.height = 50;
+        this.width = 25;
+        this.height = 25;
         this.leftBound = 0;
         this.rightBound = window.innerWidth - this.width;
         this.speed = 500;
@@ -29,7 +29,7 @@ export class Player {
 
     die() {
         this.alive = false;
-        this.el.setAttribute("id", "dead")
+        this.el.setAttribute("id", "dead");
     }
 
     update(deltaTime) {

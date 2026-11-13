@@ -15,7 +15,8 @@ html, body, #game {
         display: block;
         height: 50px;
         width: 50px;
-        background-color: red;
+        background-image: url(./images/icon_bucket.png);
+        // background-color: red;;
     }
 
     #dead {
@@ -23,7 +24,14 @@ html, body, #game {
         display: block;
         height: 50px;
         width: 50px;
-        background-color: rgb(221, 193, 193);
+        background-image: url(./images/icon_bucket_red.png);
+        // background-color: rgb(221, 193, 193);
+    }
+
+    #player, #dead {
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
     }
 
     .enemy {
