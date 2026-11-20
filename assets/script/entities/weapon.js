@@ -11,7 +11,7 @@ export class Weapon{
         this.x = this.player.x;
         this.y = this.player.y;
 
-        this.shootCooldown = 0.4;
+        this.shootCooldown = 0.3;
         this.shootTimer = 0;
         this.topBound = 0;
 

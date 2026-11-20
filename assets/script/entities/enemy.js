@@ -44,7 +44,7 @@ export class Enemy {
         }
 
         let el = document.createElement("div");
-        el.classList.add("enemy");
+        el.id = "enemy";
         el.style.top = this.y + "px";
         el.style.left = this.x + "px";
         el.style.width = this.width + "px";
@@ -58,6 +58,15 @@ export class Enemy {
     }
 
     update(deltaTime) {
+        const distancePlayer = Math.hypot(this.x - this.player.x, this.y - this.player.y);
+        if (distancePlayer < 100) {
+            this.el.classList = "close";
+        } else if (distancePlayer < 250) {
+            this.el.classList = "nearby";
+        } else {
+            this.el.classList = "";
+        }
+
         if(this.x > this.player.x) {
             this.x -= deltaTime * this.speed;
         } else {
