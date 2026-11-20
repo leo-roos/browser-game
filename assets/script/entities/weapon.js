@@ -11,13 +11,18 @@ export class Weapon{
         this.x = this.player.x;
         this.y = this.player.y;
 
-        this.shootCooldown = 0.2;
+        this.shootCooldown = 0.4;
         this.shootTimer = 0;
         this.topBound = 0;
 
-        this.recoil = 100;
+        this.recoil = 400;
 
         this.el = this.#init();
+    }
+
+    updateBound(bottomBound, rightBound) {
+        this.bottomBound = bottomBound - this.height;
+        this.rightBound = rightBound - this.width;
     }
 
     #init() {
@@ -31,9 +36,9 @@ export class Weapon{
         return el;
     }
 
-    shoot(angle) {
+    shoot(xAngle, yAngle) {
         if (this.shootTimer > this.shootCooldown) {
-            let b = new Bullet(this.targetEl, this.player, this, angle);
+            let b = new Bullet(this.targetEl, this.player, this, xAngle, yAngle);
             this.bullets.push(b);
             this.shootTimer = 0;
         }
@@ -54,7 +59,7 @@ export class Weapon{
         this.el.style.top = this.y + "px";
         for (let x = this.bullets.length - 1; x >= 0; x--) {
             this.bullets[x].draw();
-            if (this.bullets[x].y < this.topBound) {
+            if (this.bullets[x].x > (this.rightBound - this.bullets[x].width) || this.bullets[x].y < this.topBound) {
                 this.bullets[x].delete();
                 this.bullets.splice(x, 1);
                 return;

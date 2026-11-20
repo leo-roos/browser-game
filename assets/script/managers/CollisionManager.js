@@ -1,12 +1,12 @@
 export class CollisionManager {
-    constructor(targetEl, player, enemyManager) {
+    constructor(targetEl, player, enemyManager, bottomBound, rightBound) {
         this.targetEl = targetEl;
         this.player = player;
         this.enemyManager = enemyManager;
 
-        this.bottomBound = 0;
+        this.bottomBound = bottomBound;
         this.leftBound = 0;
-        this.rightBound = 0;
+        this.rightBound = rightBound;
     }
 
     updateBound(bottomBound, rightBound) {
@@ -31,7 +31,7 @@ export class CollisionManager {
             if (this.isCollsion(this.player, this.enemyManager.enemies[x])) {
                 this.player.die();
             }
-            if (this.enemyManager.enemies[x].y > this.bottomBound) {
+            if ((this.enemyManager.enemies[x].y + this.enemyManager.enemies[x].width) > this.bottomBound) {
                 this.enemyManager.enemies[x].kill();
                 this.enemyManager.enemies.splice(x, 1);
                 continue;

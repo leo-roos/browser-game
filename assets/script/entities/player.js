@@ -1,7 +1,7 @@
 import { Weapon } from "./weapon.js";
 
 export class Player {
-    constructor(targetEl, input) {
+    constructor(targetEl, input, bottomBound, rightBound) {
         this.targetEl = targetEl;
         this.input = input;
         this.x = window.innerWidth / 2;
@@ -9,9 +9,9 @@ export class Player {
         this.width = 25;
         this.height = 25;
         this.leftBound = 0;
-        this.rightBound = window.innerWidth - this.width;
+        this.rightBound = rightBound - this.width;
         this.topBound = 0;
-        this.bottomBound = 0;
+        this.bottomBound = bottomBound;
 
         this.mouseX = 0;
         this.mouseY = 0;
@@ -26,6 +26,7 @@ export class Player {
     updateBound(bottomBound, rightBound) {
         this.bottomBound = bottomBound - this.height;
         this.rightBound = rightBound - this.width;
+        this.weapon.updateBound(bottomBound, rightBound)
     }
 
     updateMouse(x, y) {
@@ -70,14 +71,17 @@ export class Player {
         if (this.input.keys.ArrowDown || this.input.keys.s) {
             this.y += deltaTime * this.speed * this.verticalSpeed;
         }
-        if (this.input.keys[" "]) {
-            let angle = this.#getAngleDegrees(this.mouseX, this.mouseY, this.weapon.x, this.weapon.y) - 90;
-            if (angle < -60 || angle > 60) {
-                angle = 0;
-            }
-            this.weapon.shoot(angle);
-            this.y += deltaTime * this.weapon.recoil;
-            this.x -= deltaTime * this.weapon.recoil * (angle / 57.6);
+        if (this.input.keys[" "] && this.weapon.shootTimer > this.weapon.shootCooldown) {
+            const dX = this.mouseX - this.weapon.x;
+            const dY = -(this.mouseY - this.weapon.y);
+            const dZ = Math.sqrt(dX ** 2 + dY ** 2);
+
+            const xRad = dX / dZ;
+            const yRad = dY / dZ;
+
+            this.weapon.shoot(xRad, yRad);
+            this.x -= deltaTime * this.weapon.recoil * (xRad);
+            this.y += deltaTime * this.weapon.recoil * (yRad);
         }
 
         if (this.x >= this.rightBound) {

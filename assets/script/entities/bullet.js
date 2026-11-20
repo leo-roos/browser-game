@@ -1,5 +1,5 @@
 export class Bullet {
-    constructor(targetEl, player, weapon, angle) {
+    constructor(targetEl, player, weapon, xRad, yRad) {
         this.targetEl = targetEl;
         this.player = player;
         this.weapon = weapon;
@@ -10,7 +10,8 @@ export class Bullet {
         this.y = this.weapon.y;
         this.speed = 750;
 
-        this.angle = angle;
+        this.xRad = xRad,
+        this.yRad = yRad,
 
         this.el = this.#init();
     }
@@ -22,7 +23,12 @@ export class Bullet {
         el.style.top = this.y + "px";
         el.style.width = this.width + "px";
         el.style.height = this.height + "px";
-        el.style.rotate = this.angle + "deg";
+
+        const moveAngleRad = Math.atan2(this.yRad, this.xRad);
+        const weaponAngleRad = moveAngleRad + Math.PI / 2;
+        const weaponAngleDeg = weaponAngleRad * (180 / Math.PI);
+
+        el.style.transform = `rotate(${-weaponAngleDeg}deg)`;
         this.targetEl.append(el);
         return el;
     }
@@ -32,8 +38,8 @@ export class Bullet {
     }
 
     update(deltaTime) {
-        this.y -= deltaTime * this.speed;
-        this.x += deltaTime * this.speed * (this.angle / 57.6);
+        this.y -= deltaTime * this.speed * (this.yRad);
+        this.x += deltaTime * this.speed * (this.xRad);
     }
 
     draw() {
