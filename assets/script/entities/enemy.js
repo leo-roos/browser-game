@@ -1,16 +1,48 @@
 export class Enemy {
-    constructor(targetEl) {
+    constructor(targetEl, player, bottomBound, rightBound) {
         this.targetEl = targetEl;
+        this.player = player;
         this.x = Math.random() * window.innerWidth;
         this.y = 0;
         this.width = 50;
         this.height = 50;
-        this.speed = 500; 
+        this.speed = 150; 
+
+        this.margin = 50 + Math.floor(Math.random() * 50);
+
+        console.log(bottomBound, rightBound)
+
+        this.bottomBound = bottomBound;
+        this.rightBound = rightBound;
+
+        this.directionCooldown = 2,
+        this.directionTimer = 0;
+        this.direction = 0;
+
         this.el = this.#init();
     }
 
+    updateBound(bottomBound, rightBound) {
+        this.bottomBound = bottomBound - this.height;
+        this.rightBound = rightBound - this.width;
+    }
+
     #init() {
-        // this.width = Math.random()*100;
+        this.spawnPosition = Math.floor(Math.random()*4);
+        if(this.spawnPosition == 0) {
+            this.x = 0;
+            this.y = Math.random() * this.bottomBound;
+        } else if (this.spawnPosition == 1) {
+            this.x = Math.random() * this.rightBound;
+            this.y = this.bottomBound - this.height;
+        } else if (this.spawnPosition == 2) {
+            this.x = this.rightBound;
+            this.y = Math.random() * this.bottomBound;
+        } else if (this.spawnPosition == 3) {
+            this.x = Math.random() * this.rightBound;
+            this.y = 0;
+        }
+
         let el = document.createElement("div");
         el.classList.add("enemy");
         el.style.top = this.y + "px";
@@ -26,14 +58,16 @@ export class Enemy {
     }
 
     update(deltaTime) {
-        this.y += this.speed * deltaTime;
+        if(this.x > this.player.x) {
+            this.x -= deltaTime * this.speed;
+        } else {
+            this.x += deltaTime * this.speed;
+        }
 
-        if(Math.floor(Math.random() * 10) == 1) {
-            if(Math.floor(Math.random() * 2) == 1) {
-                this.x += this.speed * deltaTime;
-            } else {
-                this.x -= this.speed * deltaTime;
-            }
+        if(this.y > this.player.y) {
+            this.y -= deltaTime * this.speed;
+        } else {
+            this.y += deltaTime * this.speed;
         }
     }
 

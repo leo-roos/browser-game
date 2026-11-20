@@ -16,12 +16,12 @@ export class GameManager {
 
         this.mouseX = 0;
         this.mouseY = 0;
-
-        this.player = new Player(targetEl, this.input);
-        this.enemyManager = new EnemyManager(targetEl, this.player);
-        this.collisionManager = new CollisionManager(targetEl, this.player, this.enemyManager)
-        this.updateBound(this.bottomBound, this.rightBound);
         this.#init();
+
+        this.player = new Player(targetEl, this.input, this.bottomBound, this.rightBound);
+        this.enemyManager = new EnemyManager(targetEl, this.player, this.bottomBound, this.rightBound);
+        this.collisionManager = new CollisionManager(targetEl, this.player, this.enemyManager, this.bottomBound, this.rightBound)
+        this.updateBound(this.bottomBound, this.rightBound);
     }
 
     #init() {
@@ -46,6 +46,7 @@ export class GameManager {
         this.bottomBound = bottomBound;
         this.rightBound = rightBound;
 
+        this.enemyManager.updateBound(this.bottomBound, this.rightBound)
         this.collisionManager.updateBound(this.bottomBound, this.rightBound)
         this.player.updateBound(this.bottomBound, this.rightBound)
     }

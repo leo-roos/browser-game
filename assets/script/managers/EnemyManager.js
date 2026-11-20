@@ -1,16 +1,30 @@
 import { Enemy } from "../entities/enemy.js";
 
 export class EnemyManager {
-    constructor(targetEl, player) {
+    constructor(targetEl, player, bottomBound, rightBound) {
         this.targetEl = targetEl;
         this.player = player;
         this.enemies = [];
         this.spawnTimer = 0.40;
         this.spawnCounter = 0;
+
+        this.bottomBound = bottomBound;
+        this.rightBound = rightBound;
+    }
+
+    updateBound(bottomBound, rightBound) {
+        this.bottomBound = bottomBound;
+        this.rightBound = rightBound;
+        console.log(bottomBound, rightBound)
+
+
+        this.enemies.forEach(enemy => {
+            enemy.updateBound(bottomBound, rightBound);
+        });
     }
 
     spawnEnemy() {
-        let e = new Enemy(this.targetEl);
+        let e = new Enemy(this.targetEl, this.player, this.bottomBound, this.rightBound);
         this.enemies.push(e);
     }
 
